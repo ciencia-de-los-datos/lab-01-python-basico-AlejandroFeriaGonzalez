@@ -11,7 +11,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+import csv
 
 def pregunta_01():
     """
@@ -21,7 +21,17 @@ def pregunta_01():
     214
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        col1, col2, col3, col4, col5 = [], [], [], [], []
+        for row in reader:
+            col1.append(row[0])
+            col2.append(int(row[1]))
+            col3.append(row[2])
+            col4.append(row[3])
+            col5.append(row[4])
+
+    return sum(col2)
 
 
 def pregunta_02():
@@ -39,7 +49,13 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[0]] = cuenta.get(row[0], 0) + 1
+
+    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
 
 
 def pregunta_03():
@@ -57,7 +73,13 @@ def pregunta_03():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[0]] = cuenta.get(row[0], 0)
+            cuenta[row[0]] += int(row[1])
+    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
 
 
 def pregunta_04():
@@ -82,7 +104,12 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[2][5:7]] = cuenta.get(row[2][5:7], 0) + 1
+    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
 
 
 def pregunta_05():
@@ -100,7 +127,14 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[0]] = cuenta.get(row[0], [])
+            cuenta[row[0]].append(int(row[1]))
+    return sorted([(k, max(v), min(v)) for k, v in cuenta.items()], key=lambda x: x[0])
+
 
 
 def pregunta_06():
@@ -125,11 +159,19 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            for k, v in [x.split(':') for x in row[4].split(',')]:
+                cuenta[k] = cuenta.get(k, [])
+                cuenta[k].append(int(v))
+    return sorted([(k, min(v), max(v)) for k, v in cuenta.items()], key=lambda x: x[0])
 
 
 def pregunta_07():
     """
+    TODO: no entiedo la pregunta
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla contiene un
     valor posible de la columna 2 y una lista con todas las letras asociadas (columna 1)
     a dicho valor de la columna 2.
@@ -149,11 +191,19 @@ def pregunta_07():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[1]] = cuenta.get(row[1], [])
+            cuenta[row[1]].append(row[0])
+    return sorted([(int(k), v) for k, v in cuenta.items()], key=lambda x: x[0])
+
 
 
 def pregunta_08():
     """
+    TODO
     Genere una lista de tuplas, donde el primer elemento de cada tupla contiene  el valor
     de la segunda columna; la segunda parte de la tupla es una lista con las letras
     (ordenadas y sin repetir letra) de la primera  columna que aparecen asociadas a dicho
@@ -174,7 +224,15 @@ def pregunta_08():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[1]] = cuenta.get(row[1], [])
+            if row[0] not in cuenta[row[1]]:
+                cuenta[row[1]].append(row[0])
+    return sorted([(int(k), sorted(v)) for k, v in cuenta.items()], key=lambda x: x[0])
+
 
 
 def pregunta_09():
@@ -197,7 +255,13 @@ def pregunta_09():
     }
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            for k, v in [x.split(':') for x in row[4].split(',')]:
+                cuenta[k] = cuenta.get(k, 0) + 1
+    return sorted([(k, v) for k, v in cuenta.items()], key=lambda x: x[0])
 
 
 def pregunta_10():
@@ -218,7 +282,13 @@ def pregunta_10():
 
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        respuesta = []
+        for row in reader:
+            respuesta.append((row[0], len(row[3].split(',')), len(row[4].split(','))))
+
+    return respuesta
 
 
 def pregunta_11():
@@ -239,7 +309,13 @@ def pregunta_11():
 
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            for k in row[3].split(','):
+                cuenta[k] = cuenta.get(k, 0) + int(row[1])
+    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
 
 
 def pregunta_12():
@@ -257,4 +333,11 @@ def pregunta_12():
     }
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        cuenta = {}
+        for row in reader:
+            cuenta[row[0]] = cuenta.get(row[0], 0)
+            for k, v in [x.split(':') for x in row[4].split(',')]:
+                cuenta[row[0]] += int(v)
+    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
