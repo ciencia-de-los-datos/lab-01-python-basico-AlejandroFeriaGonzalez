@@ -13,6 +13,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 """
 import csv
 
+
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
@@ -55,7 +56,7 @@ def pregunta_02():
         for row in reader:
             cuenta[row[0]] = cuenta.get(row[0], 0) + 1
 
-    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
+    return sorted(cuenta.items(), key=lambda x: x[0])
 
 
 def pregunta_03():
@@ -79,7 +80,7 @@ def pregunta_03():
         for row in reader:
             cuenta[row[0]] = cuenta.get(row[0], 0)
             cuenta[row[0]] += int(row[1])
-    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
+    return sorted(cuenta.items(), key=lambda x: x[0])
 
 
 def pregunta_04():
@@ -109,7 +110,7 @@ def pregunta_04():
         cuenta = {}
         for row in reader:
             cuenta[row[2][5:7]] = cuenta.get(row[2][5:7], 0) + 1
-    return dict(sorted(cuenta.items(), key=lambda x: x[0]))
+    return sorted(cuenta.items(), key=lambda x: x[0])
 
 
 def pregunta_05():
@@ -134,7 +135,6 @@ def pregunta_05():
             cuenta[row[0]] = cuenta.get(row[0], [])
             cuenta[row[0]].append(int(row[1]))
     return sorted([(k, max(v), min(v)) for k, v in cuenta.items()], key=lambda x: x[0])
-
 
 
 def pregunta_06():
@@ -200,7 +200,6 @@ def pregunta_07():
     return sorted([(int(k), v) for k, v in cuenta.items()], key=lambda x: x[0])
 
 
-
 def pregunta_08():
     """
     TODO
@@ -234,7 +233,6 @@ def pregunta_08():
     return sorted([(int(k), sorted(v)) for k, v in cuenta.items()], key=lambda x: x[0])
 
 
-
 def pregunta_09():
     """
     Retorne un diccionario que contenga la cantidad de registros en que aparece cada
@@ -261,7 +259,7 @@ def pregunta_09():
         for row in reader:
             for k, v in [x.split(':') for x in row[4].split(',')]:
                 cuenta[k] = cuenta.get(k, 0) + 1
-    return sorted([(k, v) for k, v in cuenta.items()], key=lambda x: x[0])
+    return dict(sorted([(k, v) for k, v in cuenta.items()], key=lambda x: x[0]))
 
 
 def pregunta_10():
@@ -286,7 +284,8 @@ def pregunta_10():
         reader = csv.reader(file, delimiter='\t')
         respuesta = []
         for row in reader:
-            respuesta.append((row[0], len(row[3].split(',')), len(row[4].split(','))))
+            respuesta.append(
+                (row[0], len(row[3].split(',')), len(row[4].split(','))))
 
     return respuesta
 
